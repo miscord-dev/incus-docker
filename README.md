@@ -63,6 +63,7 @@ docker run -d \
 --restart unless-stopped \
 --network host \
 --pid=host \
+--cgroupns=host \
 --volume /dev:/dev \
 --volume /var/lib/incus:/var/lib/incus \
 --volume /lib/modules:/lib/modules:ro \
