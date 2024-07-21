@@ -44,7 +44,7 @@ RUN echo "#!/bin/bash" > /sbin/systemctl && \
     echo ' fi' >> /start.sh && \
     echo '}' >> /start.sh && \
     echo 'export PATH="/opt/incus/bin/:${PATH}"' >> /start.sh && \
-    echo 'export INCUS_OVMF_PATH="/opt/incus/share/qemu/"' >> /start.sh && \
+    echo 'export INCUS_EDK2_PATH="/opt/incus/share/qemu/"' >> /start.sh && \
     echo 'export LD_LIBRARY_PATH="/opt/incus/lib/"' >> /start.sh && \
     echo 'export INCUS_LXC_TEMPLATE_CONFIG="/opt/incus/share/lxc/config/"' >> /start.sh && \
     echo 'export INCUS_DOCUMENTATION="/opt/incus/doc/"' >> /start.sh && \
@@ -75,7 +75,7 @@ RUN echo "#!/bin/bash" > /sbin/systemctl && \
 
 # Set environment variables
 #ENV PATH="/opt/incus/bin/:${PATH}"
-#ENV INCUS_OVMF_PATH="/opt/incus/share/qemu/"
+#ENV INCUS_EDK2_PATH="/opt/incus/share/qemu/"
 #ENV LD_LIBRARY_PATH="/opt/incus/lib/"
 #ENV INCUS_LXC_TEMPLATE_CONFIG="/opt/incus/share/lxc/config/"
 #ENV INCUS_DOCUMENTATION="/opt/incus/doc/"
