@@ -38,9 +38,9 @@ First, make the directory to hold incus configuration:
 ``` mkdir /var/lib/incus ```
 
 
-With Podman (recommended):
+With Podman (needs root permissions) (recommended):
 ```
-podman run -d \
+sudo podman run -d \
 --name incus \
 --cgroups=no-conmon \
 --cgroupns=host \
