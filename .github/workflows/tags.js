@@ -13,6 +13,8 @@ incus | 1:6.6-debian12-202411092101 | https://pkgs.zabbly.com/incus/stable bookw
 
     const result = await $`docker run --rm ${baseImage} apt-cache madison incus`
 
+    console.log(result)
+
     const versions = result.stdout.split('\n').map(line => {
         const [_, version] = line.split('|').filter(Boolean).map(col => col.trim())
 
