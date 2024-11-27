@@ -1,5 +1,7 @@
 # Use the official Debian Bookworm base image
-FROM debian:bookworm-slim
+ARG BASE_IMAGE=debian:bookworm-slim
+
+FROM ${BASE_IMAGE} AS base
 
 # We make a fake systemctl so that incus doesn't error out without systemd
 RUN echo "#!/bin/bash" > /sbin/systemctl && \
@@ -7,8 +9,13 @@ RUN echo "#!/bin/bash" > /sbin/systemctl && \
     chmod +x /sbin/systemctl && \
     echo "deb http://deb.debian.org/debian bookworm contrib" >> /etc/apt/sources.list && \
 # Install curl so we can install the keyring.
-    apt-get update && \
-    apt-get install --no-install-recommends -y curl ca-certificates && \
+    apt-get update
+
+FROM base
+
+ARG INCUS_VERSION
+
+RUN apt-get install --no-install-recommends -y curl ca-certificates && \
     mkdir -p /etc/apt/keyrings/ && \
     curl -fsSL https://pkgs.zabbly.com/key.asc -o /etc/apt/keyrings/zabbly.asc && \
     echo "deb [signed-by=/etc/apt/keyrings/zabbly.asc] https://pkgs.zabbly.com/incus/stable $(. /etc/os-release && echo ${VERSION_CODENAME}) main" > /etc/apt/sources.list.d/zabbly-incus-stable.list && \
