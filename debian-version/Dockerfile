@@ -9,19 +9,19 @@ RUN echo "#!/bin/bash" > /sbin/systemctl && \
     chmod +x /sbin/systemctl && \
     echo "deb http://deb.debian.org/debian bookworm contrib" >> /etc/apt/sources.list && \
 # Install curl so we can install the keyring.
+    apt-get update && \
+    apt-get install --no-install-recommends -y curl ca-certificates && \
+    mkdir -p /etc/apt/keyrings/ && \
+    curl -fsSL https://pkgs.zabbly.com/key.asc -o /etc/apt/keyrings/zabbly.asc && \
+    echo "deb [signed-by=/etc/apt/keyrings/zabbly.asc] https://pkgs.zabbly.com/incus/stable $(. /etc/os-release && echo ${VERSION_CODENAME}) main" > /etc/apt/sources.list.d/zabbly-incus-stable.list && \
+# Install incus and so on
     apt-get update
 
 FROM base
 
 ARG INCUS_VERSION
 
-RUN apt-get install --no-install-recommends -y curl ca-certificates && \
-    mkdir -p /etc/apt/keyrings/ && \
-    curl -fsSL https://pkgs.zabbly.com/key.asc -o /etc/apt/keyrings/zabbly.asc && \
-    echo "deb [signed-by=/etc/apt/keyrings/zabbly.asc] https://pkgs.zabbly.com/incus/stable $(. /etc/os-release && echo ${VERSION_CODENAME}) main" > /etc/apt/sources.list.d/zabbly-incus-stable.list && \
-# Install incus and so on
-    apt-get update && \
-    apt-get install --no-install-recommends -y fuse nftables ebtables arptables iproute2 thin-provisioning-tools openvswitch-switch btrfs-progs lvm2 udev iptables kmod  && \
+RUN apt-get install --no-install-recommends -y fuse nftables ebtables arptables iproute2 thin-provisioning-tools openvswitch-switch btrfs-progs lvm2 udev iptables kmod  && \
     apt-get install --no-install-recommends --no-install-suggests -y zfsutils-linux && \
     apt-get install --no-install-recommends -y incus incus-ui-canonical && \
     apt-get remove -y curl && \
