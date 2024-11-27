@@ -27,7 +27,7 @@ incus | 1:6.6-debian12-202411092101 | https://pkgs.zabbly.com/incus/stable bookw
     for (const version of versions) {
         const image = `ghcr.io/${process.env.IMAGE_NAME}-${baseImage}-${version}-${dateStr}`
 
-        await $`docker buildx build --platforms linux/amd64,linux/arm64 --build-arg BASE_IMAGE=${baseImage} --build-arg INCUS_VERSION=${version} -f ./debian-version/Dockerfile -t  .`
+        await $`docker buildx build --platform linux/amd64,linux/arm64 --build-arg BASE_IMAGE=${baseImage} --build-arg INCUS_VERSION=${version} -f ./debian-version/Dockerfile -t  .`
         
         await $`docker push ${image}`
     }
