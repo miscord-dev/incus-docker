@@ -1,4 +1,4 @@
-import { $ } from 'zx'
+const { $ } = require('zx')
 
 /*
 incus | 1:6.7-debian12-202411151825 | https://pkgs.zabbly.com/incus/stable bookworm/main arm64 Packages
