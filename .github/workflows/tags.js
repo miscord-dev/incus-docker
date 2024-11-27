@@ -1,11 +1,12 @@
-const { $ } = require('zx')
+#! /bin/zx
 
 /*
 incus | 1:6.7-debian12-202411151825 | https://pkgs.zabbly.com/incus/stable bookworm/main arm64 Packages
 incus | 1:6.6-debian12-202411092101 | https://pkgs.zabbly.com/incus/stable bookworm/main arm64 Packages
 */
 
-module.exports = async ({github, context, core}) => {
+
+(async () => {
     const baseImage = `apt-${process.env.BASE_IMAGE}`
 
     await $`docker build --target base --build-arg BASE_IMAGE=${process.env.BASE_IMAGE} -f ./debian-version/Dockerfile -t ${baseImage} .`
@@ -28,4 +29,6 @@ module.exports = async ({github, context, core}) => {
         
         await $`docker push ${image}`
     }
-}
+})().catch(err => {
+    throw err;
+})
